@@ -66,5 +66,15 @@ hierarchical = AgglomerativeClustering(n_clusters=4)
 df['cluster_hierarchical'] = np.nan  # Inicializar la columna con NaN
 df.loc[data.index, 'cluster_hierarchical'] = hierarchical.fit_predict(data_scaled)  # Asignar solo a las filas válidas
 
+# Visualización del dendrograma
+plt.figure(figsize=(10, 5))
+linkage_matrix = linkage(data_scaled, method='ward')
+dendrogram(linkage_matrix)
+plt.title('Dendrograma del clustering jerárquico')
+plt.xlabel('Índices de las muestras')
+plt.ylabel('Distancia')
+plt.savefig("dendrograma_clusters.png")  # Guardar la figura
+plt.close()  # Cerrar la figura
+
 # Guardar resultados
 df.to_csv("movies_clustered.csv", index=False)
