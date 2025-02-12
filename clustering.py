@@ -41,6 +41,20 @@ plt.title('Método del codo para determinar k')
 plt.savefig("codo_clusters.png")  # Guardar la figura
 plt.close()  # Cerrar la figura
 
+# Evaluación con coeficiente de silueta
+silhouette_scores = []
+for k in k_values:
+    kmeans = KMeans(n_clusters=k, random_state=42, n_init=10)
+    labels = kmeans.fit_predict(data_scaled)
+    silhouette_scores.append(silhouette_score(data_scaled, labels))
+
+plt.figure(figsize=(8, 5))
+plt.plot(k_values, silhouette_scores, marker='o')
+plt.xlabel('Número de clusters')
+plt.ylabel('Coeficiente de silueta')
+plt.title('Análisis de la calidad del agrupamiento')
+plt.savefig("silhouette_scores.png")  # Guardar la figura
+plt.close()  # Cerrar la figura
 
 # Aplicación de K-Means con el número óptimo de clusters (suponiendo k=4 basado en el codo)
 kmeans = KMeans(n_clusters=4, random_state=42, n_init=10)
